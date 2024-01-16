@@ -3,7 +3,9 @@ import toast from "react-hot-toast";
 
 const fetchTable = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/get-all-wines");
+    const response = await fetch("http://localhost:3000/api/get-all-wines", {
+      cache: "no-store",
+    });
 
     if (response.ok) {
       const data = await response.json();

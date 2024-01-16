@@ -1,7 +1,10 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
+import { db } from "@vercel/postgres";
 
 export async function POST(request: Request) {
+  const client = await db.connect();
+
   try {
     const requestBody = await request.json(); // Parse JSON body
 
@@ -46,7 +49,7 @@ export async function POST(request: Request) {
       throw new Error("Invalid wine type");
     }
 
-    const result = await sql`
+    const result = await client.sql`
       INSERT INTO Wines (
         Name,
         Year,

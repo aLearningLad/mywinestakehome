@@ -1,3 +1,4 @@
+import { EditUI } from "@/components/foreditpage";
 import { Iparams } from "@/types";
 
 const getWineById = async (id: string) => {
@@ -27,8 +28,8 @@ const EditWinePage = async ({ params }: { params: Iparams }) => {
   console.log("This is the wine, bruv:", res);
 
   return (
-    <div className="bg-black text-white w-full h-screen flex justify-center items-center">
-      EditWinePage
+    <div className="bg-black w-full h-fit">
+      <EditUI res={res.wine} id={id} />
     </div>
   );
 };
