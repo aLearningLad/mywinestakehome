@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const client = await db.connect();
 
   try {
-    const result = await sql`SELECT * FROM Wines;`;
+    const result = await client.sql`SELECT * FROM Wines;`;
     return NextResponse.json({ wines: result }, { status: 200 });
   } catch (error: any) {
     console.log(`Error occured while fetching all wines: ${error}`);

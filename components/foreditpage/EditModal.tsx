@@ -4,6 +4,8 @@ import Link from "next/link";
 import { WineFooter } from "../commonUI";
 import { EditModalHeader } from ".";
 import { ChangeEvent, useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface EditModalProps {
   handleModal: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -12,6 +14,8 @@ interface EditModalProps {
 }
 
 const EditModal: React.FC<EditModalProps> = ({ handleModal, res, id }) => {
+  const router = useRouter();
+
   //ALL MY STATES
   const [newWineName, setNewWineName] = useState<string>(res.name);
   const [newWineYear, setNewWineYear] = useState<number>(res.year);
@@ -159,8 +163,12 @@ const EditModal: React.FC<EditModalProps> = ({ handleModal, res, id }) => {
 
       if (!response.ok) {
         console.error("Failed to save updates");
+        toast.error("Please try again");
         return;
       }
+
+      toast.success("Wine details updated!");
+      router.push("/allwines");
 
       const data = await response.json();
       console.log("Wine details updated successfully:", data);

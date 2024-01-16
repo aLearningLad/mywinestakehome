@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, sql } from "@vercel/postgres";
 import { error } from "console";
+import { Iparams } from "@/types";
 
-export async function PUT(req: any) {
+export async function PUT(req: any, { params }: { params: Iparams }) {
   const client = await db.connect();
 
   try {
-    const { id }: { id: string } = req.query;
+    // const { id }: { id: string } = req.query;
+    const { id } = params;
 
     if (!id) {
       return NextResponse.json({ error: "Invalid request, 'id' is missing" });
@@ -33,7 +35,7 @@ export async function PUT(req: any) {
       vintner,
     } = requestBody;
 
-    const result = await sql`
+    const result = await client.sql`
 UPDATE Wines
 SET 
 Name = ${wineName},
@@ -51,8 +53,7 @@ BottleSize = ${bottleSize},
 TastingNotes = ${tastingNotes},
 OakAging = ${oakAging},
 AlcoholContent = ${alcoholContent},
-AlcoholContent = ${alcoholContent},
-Vintner = ${vintner},
+Vintner = ${vintner}
 
 WHERE id = ${id}
 RETURNING *
@@ -62,6 +63,7 @@ RETURNING *
       return NextResponse.json({ error: "Wine not found" }, { status: 404 });
     }
 
+    console.log(result);
     return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
     console.error(`Error updating wine: ${error}`);

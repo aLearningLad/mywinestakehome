@@ -3,13 +3,17 @@ import { Inavlinks } from "@/types";
 import Link from "next/link";
 import { FaWineBottle } from "react-icons/fa";
 
+interface NavbarProps {
+  uniqueTextColor: string;
+}
+
 const Navbar = () => {
   return (
-    <div className="h-full w-full flex justify-between border-b-[1px] border-neutral-300/70">
+    <div className="h-full text-white backdrop-blur-sm w-full flex justify-between border-b-[1px] border-neutral-300/70">
       {/* LOGO & HOME  */}
       <div className="w-4/12 h-full flex justify-start items-center">
         <Link
-          href="#"
+          href="/"
           className="flex justify-start flex-col items-center gap-1"
         >
           <FaWineBottle size={30} />
